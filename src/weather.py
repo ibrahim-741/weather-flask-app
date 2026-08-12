@@ -19,9 +19,9 @@ def get_weather(city):
         "units": "metric"
     }
 
-    response = requests.get(BASE_URL, params=params)
-
-    if response.status_code == 200:
+    try:
+        response = requests.get(BASE_URL, params=params, timeout=5)
+        response.raise_for_status()
         return response.json()
-    else:
+    except requests.exceptions.RequestException:
         return None
